@@ -21,7 +21,6 @@ app.get("/notes", (req, res) => {
 
 app.post("/api/notes", (req, res) => {
     const { title, text, id } = req.body;
-    console.log(req.body)
     if(req.body){
         const newBody = {
             title,
@@ -49,8 +48,9 @@ app.get("/api/notes/:id", (req, res) => {
 
 app.delete("/api/notes/:id", (req, res) => {
     fs.writeFileSync("./db/db.json", JSON.stringify(api.filter(note => note.id != req.params.id), null, 4));
+    console.log("goodbye, note");
     res.json({ok: true});
-    window.location.reload();
+    location.reload();
 })
 
 app.get("/api/notes", (req,res) => {
