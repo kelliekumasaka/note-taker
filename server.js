@@ -2,7 +2,6 @@ const fs = require("fs");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const api = require("./Develop/db/db.json");
 const path = require("path");
 const uuid = require("./Develop/helpers/uuid");
 
@@ -20,6 +19,7 @@ app.get("/notes", (req, res) => {
 });
 
 app.post("/api/notes", (req, res) => {
+    const api = JSON.parse(fs.readFileSync("./Develop/db/db.json"));
     const { title, text, id } = req.body;
     if(req.body){
         const newBody = {
@@ -37,6 +37,7 @@ app.post("/api/notes", (req, res) => {
 });
 
 app.get("/api/notes/:id", (req, res) => {
+    const api = JSON.parse(fs.readFileSync("./Develop/db/db.json"));
     for (let i = 0; i < api.length; i++) {
         if (req.params.id == api[i].id){
             return res.json(api[i])
@@ -47,15 +48,21 @@ app.get("/api/notes/:id", (req, res) => {
 })
 
 app.delete("/api/notes/:id", (req, res) => {
+    const api = JSON.parse(fs.readFileSync("./Develop/db/db.json"));
     fs.writeFileSync("./Develop/db/db.json", JSON.stringify(api.filter(note => note.id != req.params.id), null, 4));
     console.log("goodbye, note");
     res.json({ok: true});
 })
 
 app.get("/api/notes", (req,res) => {
+    const api = JSON.parse(fs.readFileSync("./Develop/db/db.json"));
     res.json(api);
 });
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname,`./Develop/public/index.html`));
+})
+
 app.listen(PORT,()=>{
-    console.log("Listenin to the lofi beats of http://localhost:" + PORT)
+    console.log("Listenin to the lofi beats of http://localhost:" + PORT);
 });
