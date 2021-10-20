@@ -19,14 +19,14 @@ app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, `./public/notes.html`))
 });
 
-app.post("/notes", (req, res) => {
-    const { title, text } = req.body;
+app.post("/api/notes", (req, res) => {
+    const { title, text, id } = req.body;
     console.log(req.body)
     if(req.body){
         const newBody = {
             title,
             text,
-            id: uuid()
+            id:uuid()
         }
         api.push(newBody);
         fs.writeFileSync("./db/db.json",JSON.stringify(api,null,4));
@@ -36,6 +36,22 @@ app.post("/notes", (req, res) => {
         res.error("Could not complete");
     }
 });
+
+app.get("/api/notes/:id", (req, res) => {
+    for (let i = 0; i < api.length; i++) {
+        if (req.params.id == api[i].id){
+            return res.json(api[i])
+        }else{
+            return res.json("wrong id number!");
+        }
+    }
+})
+
+app.delete("/api/notes/:id", (req, res) => {
+    fs.writeFileSync("./db/db.json", JSON.stringify(api.filter(note => note.id != req.params.id), null, 4));
+    res.json({ok: true});
+    window.location.reload();
+})
 
 app.get("/api/notes", (req,res) => {
     res.json(api);
