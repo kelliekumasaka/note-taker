@@ -11,6 +11,9 @@ After entering into the app, you are shown a page that has two example notes on 
 If you make a mistake note, you can easily delete so that it shows the notes that you want to remain.
 ![oops note with comment](./Develop/public/assets/images/wrongnoteadded.png)
 
+## Deployment
+You can try out the app at this [link](https://kelliekumasaka-note-taker.herokuapp.com/).
+
 ## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
