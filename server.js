@@ -50,7 +50,6 @@ app.delete("/api/notes/:id", (req, res) => {
     fs.writeFileSync("./Develop/db/db.json", JSON.stringify(api.filter(note => note.id != req.params.id), null, 4));
     console.log("goodbye, note");
     res.json({ok: true});
-    location.reload();
 })
 
 app.get("/api/notes", (req,res) => {
