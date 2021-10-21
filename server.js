@@ -20,7 +20,7 @@ app.get("/notes", (req, res) => {
 
 app.post("/api/notes", (req, res) => {
     const api = JSON.parse(fs.readFileSync("./Develop/db/db.json"));
-    const { title, text, id } = req.body;
+    const { title, text } = req.body;
     if(req.body){
         const newBody = {
             title,
